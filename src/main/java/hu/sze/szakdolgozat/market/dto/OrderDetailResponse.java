@@ -5,11 +5,15 @@ import lombok.Data;
 @Data
 public class OrderDetailResponse {
     
-    public Long id;
-    public String productname;
-    public String unittype;
-    public Integer quantity;
-    public String status;
-    public Integer productid;
+    private Long id;
+    private Long orderid;
+    private String productname;
+    private String unittype;
+    private Integer unitprice;
+    private Integer quantity;
+    private String status;
+    private Integer productid;
+
+     
 
 }

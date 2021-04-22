@@ -13,17 +13,19 @@ import org.springframework.web.bind.annotation.RestController;
 import hu.sze.szakdolgozat.market.dao.UserRepository;
 import hu.sze.szakdolgozat.market.dto.UserResponse;
 import hu.sze.szakdolgozat.market.entity.User;
+import hu.sze.szakdolgozat.market.service.UserService;
 
 @CrossOrigin("http://localhost:4200")
 @RestController
-@RequestMapping("api")
+@RequestMapping("/api")
 public class UserController {
 
 	@Autowired
 	private UserRepository userRepository;
 
 	@Autowired
-	private BCryptPasswordEncoder passwordEncoder;
+	private UserService userService;
+
 
 	@GetMapping("/auth/login")
 	public UserResponse login(@RequestParam String user) {
@@ -31,33 +33,16 @@ public class UserController {
 		User tempUser = userRepository.getUserByUsername(user);
 		UserResponse userResponse = new UserResponse();
 		userResponse.setId(tempUser.getId());
-
+		userResponse.setRole(tempUser.getRole());
 		return userResponse;
 
 	}
 
-	@PostMapping("/addCustomer")
-	public String addUserByAdmin(@RequestBody User user) {
+	@PostMapping("/registerCustomer")
+	public String customerRegistration(@RequestBody User user) {
 
-		if (userRepository.getUserByUsername(user.getUsername()) != null) {
-			
-			return "user already exists";
-			
-		} else if(userRepository.findByEmail(user.getEmail()) != null){
-			 
-			return "email already exists";
-
-		}
-		String pwd = user.getPassword();
-		String encryptPwd = passwordEncoder.encode(pwd);
-		user.setPassword(encryptPwd);
-		userRepository.save(user);
-		return "user added successfully...";
-	}
-
-	@GetMapping("/process")
-	public String process() {
-		return "processing..";
+		return userService.addUserService(user);
+		 
 	}
 
 }

@@ -1,5 +1,6 @@
 package hu.sze.szakdolgozat.market.entity;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class Order {
 
     @Column(name = "order_date", nullable = false)
     @CreationTimestamp
-    private Date orderDate;
+    private LocalDate orderDate;
 
     @Column(name = "status", nullable = false)
     private String status;

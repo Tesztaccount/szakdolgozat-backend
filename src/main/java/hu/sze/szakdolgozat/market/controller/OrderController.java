@@ -1,13 +1,10 @@
 package hu.sze.szakdolgozat.market.controller;
 
-import java.io.Console;
-import java.util.Optional;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,10 +31,7 @@ public class OrderController {
     @Autowired
     private OrderDetailRepository orderDetailRepository;
 
-    public OrderController(OrderService orderService){
-        this.orderService=orderService;
-    }
-
+   
     @PostMapping("/postOrder")
     public ResponseEntity<Object> createOrder(@RequestBody Order order){
         

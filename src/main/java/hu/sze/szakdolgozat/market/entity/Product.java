@@ -36,7 +36,10 @@ public class Product implements Serializable{
     @Column(name ="details")
     private String details;
     
-    @Column(name ="image")
+    // @Column(name = "image", length = 1000)
+	// private byte[] image;
+
+    @Column(name ="image", columnDefinition="LONGTEXT")
     private String image;
 
     @ManyToOne

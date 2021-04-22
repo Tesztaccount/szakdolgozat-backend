@@ -3,8 +3,10 @@ package hu.sze.szakdolgozat.market.dto;
 import lombok.Data;
 
 @Data
-public class UserResponse {
-    
+public class ReviewResponse {
+
     private Integer id;
-    private String role;
+    private Integer reviewdId;
+    private String review;
+    
 }

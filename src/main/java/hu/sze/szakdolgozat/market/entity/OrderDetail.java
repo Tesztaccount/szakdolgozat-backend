@@ -28,7 +28,7 @@ public class OrderDetail {
     private String unittype;
 
     @Column(name="unit_price", nullable = false)
-    private Integer unitPrice;
+    private Integer unitprice;
 
     @Column(name="quantity", nullable = false)
     private Integer quantity;

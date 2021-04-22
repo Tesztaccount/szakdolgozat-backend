@@ -38,14 +38,15 @@ public class User {
     @Column(name="email", nullable = false)
     private String email;
 
-    @Column(name="phonenumber", length = 11)
-    private String phoneNumber;
+    @Column(name="phonenumber", length = 11, nullable = false)
+    private String phonenumber;
 
     @Column(name="password", nullable = false)
     private String password;
 
-    @Column(name="image",columnDefinition = "varchar(255) default 'assets/images/cayde.jpg'")
-    private String image;
+    // @Lob
+    // @Column(name = "image", columnDefinition="LONGBLOB")
+    // private byte[] image;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     private List<Order> order;
@@ -57,12 +58,3 @@ public class User {
     private List<ProducerReview> producerReviews;
      
 }
-
-
-
-
-
-
-
-
-

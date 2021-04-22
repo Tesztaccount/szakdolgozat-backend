@@ -1,40 +1,45 @@
 package hu.sze.szakdolgozat.market.controller;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import hu.sze.szakdolgozat.market.dao.ProducerReviewRepository;
+import hu.sze.szakdolgozat.market.dao.ProductReviewRepository;
 import hu.sze.szakdolgozat.market.entity.ProducerReview;
 import hu.sze.szakdolgozat.market.entity.ProductReview;
-import hu.sze.szakdolgozat.market.service.ReviewService;
 
 
 @CrossOrigin("http://localhost:4200")
 @RestController
-@RequestMapping("api/auth")
+@RequestMapping("/api/auth")
 public class ReviewController {
 
     @Autowired
-    private ReviewService reviewService;
-
-    public ReviewController(ReviewService ReviewService){
-        this.reviewService=ReviewService;
-    }
+    private ProductReviewRepository productReviewRepository;
+    @Autowired
+    private ProducerReviewRepository producerReviewRepository;
 
     @PostMapping("/postProductReview")
-    public ResponseEntity<Object> postProductReview(@RequestBody ProductReview productReview){
-
-        return reviewService.addProductReview(productReview);
+    public String postProductReview(@RequestBody ProductReview productReview){
+        
+        if(StringUtils.isNotBlank(productReview.getReview()) && productReview.getReview().length() < 500){
+            productReviewRepository.save(productReview);
+        }
+        return "ok";
 
     }
     @PostMapping("/postProducerReview")
-    public ResponseEntity<Object> postProducerReview(@RequestBody ProducerReview producerReview){
+    public String postProducerReview(@RequestBody ProducerReview producerReview){
 
-        return reviewService.addProducerReview(producerReview);
+        if(StringUtils.isNotBlank(producerReview.getReview())){
+            producerReviewRepository.save(producerReview);
+        }
+        return "ok";
 
     }
 }
