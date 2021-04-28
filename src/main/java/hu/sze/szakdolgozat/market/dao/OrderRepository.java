@@ -12,9 +12,8 @@ import hu.sze.szakdolgozat.market.entity.Order;
 @CrossOrigin("http://localhost:4200")
 public interface OrderRepository extends JpaRepository<Order, Long>{
 
-    List<Order> findByOrderDate(LocalDate orderDate);
-
     List<Order> findAllByOrderDateBetween(
         LocalDate orderDate,
         LocalDate orderDateEnd);
+
 }

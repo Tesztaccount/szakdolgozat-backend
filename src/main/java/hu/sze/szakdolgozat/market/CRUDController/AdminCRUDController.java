@@ -48,21 +48,22 @@ public class AdminCRUDController {
 	@GetMapping("/admins")
 	public List<FullUserResponse> admins() {
 
-		List<FullUserResponse> customerList = new ArrayList<>();
+		List<FullUserResponse> adminList = new ArrayList<>();
 		List<User> tempUsers = userRepository.findByRole("admin");
 		for (int i = 0; i < tempUsers.size(); i++) {
 			User singleUser = tempUsers.get(i);
-			FullUserResponse singleCustomer = new FullUserResponse();
-			singleCustomer.setId(singleUser.getId());
-			singleCustomer.setFirstname(singleUser.getFirstname());
-			singleCustomer.setLastname(singleUser.getLastname());
-			singleCustomer.setUsername(singleUser.getUsername());
-			singleCustomer.setEmail(singleUser.getEmail());
-			singleCustomer.setPhonenumber(singleUser.getPhonenumber());
-			customerList.add(singleCustomer);
+			FullUserResponse singleAdmin = new FullUserResponse();
+			singleAdmin.setId(singleUser.getId());
+			singleAdmin.setFirstname(singleUser.getFirstname());
+			singleAdmin.setLastname(singleUser.getLastname());
+			singleAdmin.setUsername(singleUser.getUsername());
+			singleAdmin.setEmail(singleUser.getEmail());
+			singleAdmin.setPhonenumber(singleUser.getPhonenumber());
+			singleAdmin.setImage(singleUser.getImage());
+			adminList.add(singleAdmin);
 
 		}
-		return customerList;
+		return adminList;
 
 	}
 
@@ -79,7 +80,7 @@ public class AdminCRUDController {
 		producerResponse.setUsername(tempCustomer.getUsername());
 		producerResponse.setEmail(tempCustomer.getEmail());
 		producerResponse.setPhonenumber(tempCustomer.getPhonenumber());
-
+		
 		return producerResponse;
 
 	}

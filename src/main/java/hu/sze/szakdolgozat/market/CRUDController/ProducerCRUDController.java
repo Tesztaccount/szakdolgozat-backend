@@ -33,22 +33,22 @@ public class ProducerCRUDController {
 	@GetMapping("/producers")
 	public List<FullUserResponse> costumers() {
 
-		List<FullUserResponse> customerList = new ArrayList<>();
+		List<FullUserResponse> producerList = new ArrayList<>();
 		List<User> tempUsers = userRepository.findByRole("producer");
 		for (int i = 0; i < tempUsers.size(); i++) {
 			User singleUser = tempUsers.get(i);
-			FullUserResponse singleCustomer = new FullUserResponse();
-			singleCustomer.setId(singleUser.getId());
-			singleCustomer.setFirstname(singleUser.getFirstname());
-			singleCustomer.setLastname(singleUser.getLastname());
-			singleCustomer.setUsername(singleUser.getUsername());
-			singleCustomer.setEmail(singleUser.getEmail());
-			// singleCustomer.setImage(singleUser.getImage());
-			singleCustomer.setPhonenumber(singleUser.getPhonenumber());
-			customerList.add(singleCustomer);
+			FullUserResponse singleProducer = new FullUserResponse();
+			singleProducer.setId(singleUser.getId());
+			singleProducer.setFirstname(singleUser.getFirstname());
+			singleProducer.setLastname(singleUser.getLastname());
+			singleProducer.setUsername(singleUser.getUsername());
+			singleProducer.setEmail(singleUser.getEmail());
+			singleProducer.setImage(singleUser.getImage());
+			singleProducer.setPhonenumber(singleUser.getPhonenumber());
+			producerList.add(singleProducer);
 
 		}
-		return customerList;
+		return producerList;
 
 	}
 
@@ -56,15 +56,16 @@ public class ProducerCRUDController {
 	public FullUserResponse costumer(@PathVariable Integer id) {
 
 		FullUserResponse producerResponse = new FullUserResponse();
-		Optional<User> singleCustomer = userRepository.findById(id);
-		User tempCustomer = singleCustomer.get();
+		Optional<User> singleProducer = userRepository.findById(id);
+		User tempProducer = singleProducer.get();
 
-		producerResponse.setId(tempCustomer.getId());
-		producerResponse.setFirstname(tempCustomer.getFirstname());
-		producerResponse.setLastname(tempCustomer.getLastname());
-		producerResponse.setUsername(tempCustomer.getUsername());
-		producerResponse.setEmail(tempCustomer.getEmail());
-		producerResponse.setPhonenumber(tempCustomer.getPhonenumber());
+		producerResponse.setId(tempProducer.getId());
+		producerResponse.setFirstname(tempProducer.getFirstname());
+		producerResponse.setLastname(tempProducer.getLastname());
+		producerResponse.setUsername(tempProducer.getUsername());
+		producerResponse.setEmail(tempProducer.getEmail());
+		producerResponse.setPhonenumber(tempProducer.getPhonenumber());
+		producerResponse.setImage(tempProducer.getImage());
 
 		return producerResponse;
 

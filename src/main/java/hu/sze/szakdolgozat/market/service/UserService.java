@@ -47,6 +47,7 @@ public class UserService {
 		tempUser.setUsername(user.getUsername());
 		tempUser.setEmail(user.getEmail());
 		tempUser.setPhonenumber(user.getPhonenumber());
+		tempUser.setImage(user.getImage());
 
 		if (StringUtils.isNotBlank(user.getPassword())) {
 

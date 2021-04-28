@@ -1,6 +1,7 @@
 package hu.sze.szakdolgozat.market.CRUDController;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +50,10 @@ public class OrderCRUDController {
     @DeleteMapping("/deleteOrder/{id}")
 	public String delete(@PathVariable Long id) {
 
-        orderRepository.deleteById(id);
+        Optional<Order> tempOrder = orderRepository.findById(id);
+        Order order = tempOrder.get();
+        order.setStatus("Törölve");
+        orderRepository.save(order);
         return "deleted";
 	}
     

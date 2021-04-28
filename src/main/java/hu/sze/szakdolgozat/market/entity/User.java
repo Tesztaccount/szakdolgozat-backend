@@ -44,9 +44,8 @@ public class User {
     @Column(name="password", nullable = false)
     private String password;
 
-    // @Lob
-    // @Column(name = "image", columnDefinition="LONGBLOB")
-    // private byte[] image;
+    @Column(name ="image", columnDefinition="LONGTEXT")
+    private String image;
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
     private List<Order> order;

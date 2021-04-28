@@ -88,13 +88,10 @@ public class OrderDetailCRUDController {
 
     @GetMapping("/myOrderDetailList/{id}")
     public List<OrderDetailResponse> listDetails(@PathVariable long id) {
-
         List<OrderDetailResponse> detailsList = new ArrayList<>();
         List<OrderDetail> tempDetails = orderDetailRepository.findAll();
         for (int i = 0; i < tempDetails.size(); i++) {
-
             OrderDetail singleDetail = tempDetails.get(i);
-
             int productId = singleDetail.getProduct().getId();
             Optional<Product> tempProduct = productRepository.findById(productId);
             if(tempProduct.get().getUser().getId() == id){
@@ -112,7 +109,6 @@ public class OrderDetailCRUDController {
             }      
         }
         return detailsList;
-
     }
 
     @GetMapping("/orderDetail/{id}")

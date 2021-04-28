@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -120,37 +121,36 @@ public class ProductCRUDController {
 	}
 
 	@PostMapping("/addProduct")
-	public String uplaodImage(@RequestBody Product product){
+	public String addProduct(@RequestBody Product product){
 
-		Product tempProduct = new Product();
-		tempProduct.setCategory(product.getCategory());
-		tempProduct.setDetails(product.getDetails());
-		tempProduct.setProductname(product.getProductname());
-		tempProduct.setPrice(product.getPrice());
-		tempProduct.setUser(product.getUser());
-		tempProduct.setUnit(product.getUnit());
-		tempProduct.setImage(product.getImage());
+		// Product tempProduct = new Product();
+		// tempProduct.setCategory(product.getCategory());
+		// tempProduct.setDetails(product.getDetails());
+		// tempProduct.setProductname(product.getProductname());
+		// tempProduct.setPrice(product.getPrice());
+		// tempProduct.setUser(product.getUser());
+		// tempProduct.setUnit(product.getUnit());
+		// tempProduct.setImage(product.getImage());
 
-		productRepository.save(tempProduct);
+		productRepository.save(product);
 
 		return "ok";
 	}
 
-	// public static byte[] compressBytes(byte[] data) {
-	// 	Deflater deflater = new Deflater();
-	// 	deflater.setInput(data);
-	// 	deflater.finish();
-	// 	ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);
-	// 	byte[] buffer = new byte[1024];
-	// 	while (!deflater.finished()) {
-	// 		int count = deflater.deflate(buffer);
-	// 		outputStream.write(buffer, 0, count);
-	// 	}
-	// 	try {
-	// 		outputStream.close();
-	// 	} catch (IOException e) {
-	// 	}
-	// 	System.out.println("Compressed Image Byte Size - " + outputStream.toByteArray().length);
-	// 	return outputStream.toByteArray();
-	// }
+	@PutMapping("/editProduct")
+	public String editProduct(@RequestBody Product product){
+
+		Optional<Product> tempProduct = productRepository.findById(product.getId());
+		Product editedProduct = tempProduct.get();
+		editedProduct.setCategory(product.getCategory());
+		editedProduct.setDetails(product.getDetails());
+		editedProduct.setImage(product.getImage());
+		editedProduct.setPrice(product.getPrice());
+		editedProduct.setProductname(product.getProductname());
+		editedProduct.setUnit(product.getUnit());
+		editedProduct.setId(product.getId());
+		productRepository.save(editedProduct);
+		return "ok";
+
+	}
 }

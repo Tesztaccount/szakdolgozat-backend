@@ -15,80 +15,66 @@ import hu.sze.szakdolgozat.market.entity.OrderDetail;
 
 @Service
 public class OrderService {
-    
+
     @Autowired
     private OrderRepository orderRepository;
-    @Autowired
-    private OrderDetailRepository orderDetailRepository;
-
-     
 
     @Transactional
-    public ResponseEntity<Object> addOrder(Order order){
-
+    public ResponseEntity<Object> addOrder(Order order) {
         Order newOrder = new Order();
-        
         newOrder.setUser(order.getUser());
         newOrder.setTotalPrice(order.getTotalPrice());
         newOrder.setStatus(order.getStatus());
-        
+
         newOrder.setOrderDetails(order.getOrderDetails());
 
         Order savedOrder = orderRepository.save(newOrder);
-        if(orderRepository.findById(savedOrder.getId()).isPresent()){
+        if (orderRepository.findById(savedOrder.getId()).isPresent()) {
             return ResponseEntity.ok().body(savedOrder);
-        }else
+        } else
             return ResponseEntity.unprocessableEntity().body("Failed to create order");
     }
 
-    public void orderRefresh(Long orderId){
-
+    public void orderRefresh(Long orderId) {
         Optional<Order> tempOrder = orderRepository.findById(orderId);
-         
-        if(tempOrder.isPresent()){
+        if (tempOrder.isPresent()) {
             Order order = tempOrder.get();
-            refreshOrder(order);
-            orderRepository.save(order);
+            orderRepository.save(refreshSingleOrder(order));
         }
-        
     }
 
-    public void refreshAll(){
-
+    public void refreshAll() {
         List<Order> tempOrders = orderRepository.findAll();
-
         for (int i = 0; i < tempOrders.size(); i++) {
             Order order = tempOrders.get(i);
-            orderRepository.save(refreshOrder(order));
+            orderRepository.save(refreshSingleOrder(order));
         }
-        
     }
 
-    private Order refreshOrder(Order order){
-
+    private Order refreshSingleOrder(Order order) {
         Integer newPrice = 0;
         Boolean isDone = true;
         List<OrderDetail> tempDetails = order.getOrderDetails();
-        
         for (int i = 0; i < tempDetails.size(); i++) {
 
             OrderDetail temp = tempDetails.get(i);
-                newPrice = temp.getUnitprice() * temp.getQuantity() + newPrice;
-                if(temp.getStatus().equals("Folyamatban")){
-                    
-                    isDone = false;
-                }
+            newPrice = temp.getUnitprice() * temp.getQuantity() + newPrice;
+            if (temp.getStatus().equals("Folyamatban")) {
+                isDone = false;
+            }
         }
-        order.setStatus(setStatus(isDone));
+        if(!order.getStatus().equals("Törölve")){
+            order.setStatus(orderStatus(isDone));
+        }
         order.setTotalPrice(newPrice);
         return order;
     }
 
-    private String setStatus(Boolean isDone){
-        if(isDone){
+    private String orderStatus(Boolean isDone) {
+        if (Boolean.TRUE.equals(isDone)) {
             return "Elkészült";
-        }else{
+        } else {
             return "Folyamatban";
         }
-    }   
+    }
 }

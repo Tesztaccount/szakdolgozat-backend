@@ -21,7 +21,7 @@ public class ProductReview {
     @Column(name="id", nullable = false)
     private Integer id;
 
-    @Column(name ="review",columnDefinition="TEXT")
+    @Column(name ="review",columnDefinition="TEXT",nullable = false)
     private String review;
 
     @ManyToOne

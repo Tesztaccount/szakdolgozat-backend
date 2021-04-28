@@ -1,10 +1,14 @@
 package hu.sze.szakdolgozat.market.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,9 +26,10 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepository;
-
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 
 	@GetMapping("/auth/login")
@@ -36,6 +41,22 @@ public class UserController {
 		userResponse.setRole(tempUser.getRole());
 		return userResponse;
 
+	}
+	
+	@PutMapping("/editCustomerPassword/")
+	public String changePassword(@RequestBody User user){
+
+		User singleUser = userRepository.findByEmail(user.getEmail());
+		if(singleUser==null){
+			return "helytelen";
+		}
+		if(singleUser.getUsername().equals(user.getUsername())){
+			String encodedPw = passwordEncoder.encode(user.getPassword());
+			singleUser.setPassword(encodedPw);
+			userRepository.save(singleUser);
+			return "ok";
+		}
+		return "helytelen";
 	}
 
 	@PostMapping("/registerCustomer")

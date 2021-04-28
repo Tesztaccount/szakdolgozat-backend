@@ -1,6 +1,7 @@
 package hu.sze.szakdolgozat.market.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -42,13 +43,13 @@ public class OrderController {
     @GetMapping("/order/{id}")
 	public String delete(@PathVariable long id) {
 
-	    Order tempOrder = orderRepository.findById(id).get();
-        List<OrderDetail> tempDetail = tempOrder.getOrderDetails();
-
-        orderDetailRepository.deleteAll(tempDetail);
-        orderRepository.delete(tempOrder);
+        Optional<Order> tempOrder = orderRepository.findById(id);
+        Order order = tempOrder.get();
+        order.setStatus("Törölve");
+        orderRepository.save(order);
+        return "deleted";
         
-        return "order deleted";
+
 	}
 
 }

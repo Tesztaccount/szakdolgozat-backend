@@ -25,21 +25,18 @@ public class Product implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="id")
     private Integer id;
-    @Column(name ="productname")
+    @Column(name ="productname",nullable = false)
     private String productname;
-    @Column(name ="category")
+    @Column(name ="category",nullable = false)
     private String category;
-    @Column(name ="unit")
+    @Column(name ="unit",nullable = false)
     private String unit;
-    @Column(name ="price")
+    @Column(name ="price", nullable = false)
     private Integer price;
-    @Column(name ="details")
+    @Column(name ="details",nullable = false)
     private String details;
     
-    // @Column(name = "image", length = 1000)
-	// private byte[] image;
-
-    @Column(name ="image", columnDefinition="LONGTEXT")
+    @Column(name ="image", columnDefinition="LONGTEXT",nullable = false)
     private String image;
 
     @ManyToOne

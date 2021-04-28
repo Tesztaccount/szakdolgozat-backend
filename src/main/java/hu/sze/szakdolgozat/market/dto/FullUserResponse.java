@@ -11,7 +11,7 @@ public class FullUserResponse {
     private String username;
     private String phonenumber;
     private String email;
-   // private byte[] image;
+    private String image;
     
 
 }

@@ -52,6 +52,7 @@ public class CustomerCRUDController {
 			singleCustomer.setUsername(singleUser.getUsername());
 			singleCustomer.setEmail(singleUser.getEmail());
 			singleCustomer.setPhonenumber(singleUser.getPhonenumber());
+			singleCustomer.setImage(singleUser.getImage());
 			customerList.add(singleCustomer);
 
 		}
