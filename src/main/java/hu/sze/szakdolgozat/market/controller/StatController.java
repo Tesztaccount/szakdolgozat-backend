@@ -47,8 +47,6 @@ public class StatController {
                 singleOrderResponse.setCustomerid(singleOrder.getUser().getId());
                 orderList.add(singleOrderResponse);
             }
-			
-            
 		}
         return orderList;
 
